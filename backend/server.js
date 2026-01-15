@@ -18,7 +18,7 @@ const allowedOrigins = [
     'http://localhost:5174',
     'http://localhost:3000',
     process.env.FRONTEND_URL, // Production frontend URL from env
-    'https://bhuvik-enterprises.vercel.app/', // Replace with your actual Vercel URL
+    'https://bhuvik-enterprises.vercel.app', // Replace with your actual Vercel URL
 ];
 
 app.use(cors({
