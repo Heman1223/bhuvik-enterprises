@@ -29,7 +29,7 @@ app.get('/api/health', (req, res) => {
     res.json({ status: 'ok', message: 'Server is running' });
 });
 
-// Root route - ADD THIS
+// Root route
 app.get('/', (req, res) => {
     res.json({ 
         message: 'Bhuvik Enterprises API',
@@ -42,8 +42,8 @@ app.get('/', (req, res) => {
     });
 });
 
-// 404 handler - ADD THIS (optional but recommended)
-app.use('*', (req, res) => {
+// 404 handler - FIXED: Use this instead of app.use('*', ...)
+app.use((req, res) => {
     res.status(404).json({ 
         error: 'Route not found',
         message: `Cannot ${req.method} ${req.originalUrl}`
