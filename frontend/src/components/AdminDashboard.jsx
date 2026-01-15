@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
-
+console.log('🔥 API_URL:', API_URL);
+console.log('🔥 All env vars:', import.meta.env);
 function AdminDashboard() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [password, setPassword] = useState('');
