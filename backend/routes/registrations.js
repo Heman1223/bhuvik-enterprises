@@ -7,10 +7,41 @@ const fs = require('fs');
 const Registration = require('../models/Registration');
 const upload = require('../config/upload');
 
-// Initialize Razorpay
-const razorpay = new Razorpay({
-    key_id: process.env.RAZORPAY_KEY_ID,
-    key_secret: process.env.RAZORPAY_KEY_SECRET
+// Debug: Log environment variables (REMOVE AFTER TESTING)
+console.log('🔑 Razorpay Key ID exists:', !!process.env.RAZORPAY_KEY_ID);
+console.log('🔑 Razorpay Key Secret exists:', !!process.env.RAZORPAY_KEY_SECRET);
+if (process.env.RAZORPAY_KEY_ID) {
+    console.log('🔑 Key ID starts with:', process.env.RAZORPAY_KEY_ID.substring(0, 10));
+}
+
+// Initialize Razorpay with validation
+let razorpay;
+try {
+    if (!process.env.RAZORPAY_KEY_ID || !process.env.RAZORPAY_KEY_SECRET) {
+        console.error('❌ RAZORPAY KEYS NOT FOUND IN ENVIRONMENT');
+        throw new Error('Razorpay credentials not configured');
+    }
+
+    razorpay = new Razorpay({
+        key_id: process.env.RAZORPAY_KEY_ID.trim(),
+        key_secret: process.env.RAZORPAY_KEY_SECRET.trim()
+    });
+    console.log('✅ Razorpay initialized successfully');
+} catch (error) {
+    console.error('❌ Razorpay initialization failed:', error.message);
+}
+
+// DEBUG ROUTE - Check configuration
+router.get('/debug-config', (req, res) => {
+    res.json({
+        hasKeyId: !!process.env.RAZORPAY_KEY_ID,
+        hasKeySecret: !!process.env.RAZORPAY_KEY_SECRET,
+        keyIdPrefix: process.env.RAZORPAY_KEY_ID ? process.env.RAZORPAY_KEY_ID.substring(0, 10) : 'MISSING',
+        nodeEnv: process.env.NODE_ENV,
+        allEnvKeys: Object.keys(process.env).filter(key => 
+            key.includes('RAZORPAY') || key.includes('MONGODB') || key.includes('FRONTEND')
+        )
+    });
 });
 
 // @route   POST /api/registrations/create-order
@@ -18,21 +49,23 @@ const razorpay = new Razorpay({
 // @access  Public
 router.post('/create-order', async (req, res) => {
     try {
-        // Check if keys are valid, otherwise use mock
-        const isMock = !process.env.RAZORPAY_KEY_ID ||
-            process.env.RAZORPAY_KEY_ID === 'rzp_test_YOUR_KEY_ID' ||
-            process.env.RAZORPAY_KEY_ID.includes('YOUR_KEY');
+        console.log('📝 Create order request received');
 
-        if (isMock) {
-            console.log('Using Mock Payment Flow');
-            return res.status(200).json({
-                success: true,
-                order: {
-                    id: `order_mock_${Date.now()}`,
-                    amount: 99 * 100,
-                    currency: 'INR'
-                },
-                key: 'mock_key'
+        // Validate Razorpay instance
+        if (!razorpay) {
+            console.error('❌ Razorpay not initialized');
+            return res.status(500).json({
+                success: false,
+                message: 'Payment system not configured. Please contact support.'
+            });
+        }
+
+        // Validate keys
+        if (!process.env.RAZORPAY_KEY_ID || !process.env.RAZORPAY_KEY_SECRET) {
+            console.error('❌ Razorpay keys missing');
+            return res.status(500).json({
+                success: false,
+                message: 'Payment credentials not configured'
             });
         }
 
@@ -45,7 +78,9 @@ router.post('/create-order', async (req, res) => {
             }
         };
 
+        console.log('🔄 Creating Razorpay order...');
         const order = await razorpay.orders.create(options);
+        console.log('✅ Order created:', order.id);
 
         res.status(200).json({
             success: true,
@@ -57,10 +92,11 @@ router.post('/create-order', async (req, res) => {
             key: process.env.RAZORPAY_KEY_ID
         });
     } catch (error) {
-        console.error('Error creating order:', error);
+        console.error('❌ Error creating order:', error);
         res.status(500).json({
             success: false,
-            message: 'Failed to create payment order'
+            message: 'Failed to create payment order',
+            error: error.message
         });
     }
 });
@@ -96,20 +132,13 @@ router.post('/verify-payment', upload.single('resume'), async (req, res) => {
         } = req.body;
 
         // Verify payment signature
-        let isAuthentic = false;
+        const body = razorpay_order_id + '|' + razorpay_payment_id;
+        const expectedSignature = crypto
+            .createHmac('sha256', process.env.RAZORPAY_KEY_SECRET)
+            .update(body.toString())
+            .digest('hex');
 
-        // Check for mock payment
-        if (razorpay_order_id.startsWith('order_mock_')) {
-            isAuthentic = true;
-        } else {
-            const body = razorpay_order_id + '|' + razorpay_payment_id;
-            const expectedSignature = crypto
-                .createHmac('sha256', process.env.RAZORPAY_KEY_SECRET)
-                .update(body.toString())
-                .digest('hex');
-
-            isAuthentic = expectedSignature === razorpay_signature;
-        }
+        const isAuthentic = expectedSignature === razorpay_signature;
 
         if (!isAuthentic) {
             // Delete uploaded file if payment verification fails
