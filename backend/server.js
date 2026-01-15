@@ -4,8 +4,10 @@ const dotenv = require('dotenv');
 const path = require('path');
 const connectDB = require('./config/db');
 
-// Load env vars
-dotenv.config();
+// Load env vars only in development (Render provides env vars directly)
+if (process.env.NODE_ENV !== 'production') {
+    dotenv.config();
+}
 
 // Connect to database
 connectDB();
@@ -17,18 +19,19 @@ const allowedOrigins = [
     'http://localhost:5173', // Local development
     'http://localhost:5174',
     'http://localhost:3000',
-    process.env.FRONTEND_URL, // Production frontend URL from env
-    'https://bhuvik-enterprises.vercel.app', // Replace with your actual Vercel URL
-];
+    'https://bhuvik-enterprises.vercel.app', // Production frontend (no trailing slash)
+    process.env.FRONTEND_URL // Backup from environment variable
+].filter(Boolean); // Remove undefined values
 
 app.use(cors({
     origin: function(origin, callback) {
         // Allow requests with no origin (like mobile apps or curl)
         if (!origin) return callback(null, true);
         
-        if (allowedOrigins.indexOf(origin) !== -1 || allowedOrigins.includes(origin)) {
+        if (allowedOrigins.includes(origin)) {
             callback(null, true);
         } else {
+            console.log('CORS blocked origin:', origin);
             callback(new Error('Not allowed by CORS'));
         }
     },
@@ -49,7 +52,11 @@ app.use('/api/registrations', require('./routes/registrations'));
 
 // Health check route
 app.get('/api/health', (req, res) => {
-    res.json({ status: 'ok', message: 'Server is running' });
+    res.json({ 
+        status: 'ok', 
+        message: 'Server is running',
+        env: process.env.NODE_ENV || 'development'
+    });
 });
 
 // Root route
@@ -77,4 +84,6 @@ const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
+    console.log('Environment:', process.env.NODE_ENV || 'development');
+    console.log('Allowed Origins:', allowedOrigins);
 });
