@@ -12,8 +12,31 @@ connectDB();
 
 const app = express();
 
-// Middleware
-app.use(cors());
+// CORS Configuration - CRITICAL FOR PRODUCTION
+const allowedOrigins = [
+    'http://localhost:5173', // Local development
+    'http://localhost:5174',
+    'http://localhost:3000',
+    process.env.FRONTEND_URL, // Production frontend URL from env
+    'https://bhuvik-enterprises.vercel.app/', // Replace with your actual Vercel URL
+];
+
+app.use(cors({
+    origin: function(origin, callback) {
+        // Allow requests with no origin (like mobile apps or curl)
+        if (!origin) return callback(null, true);
+        
+        if (allowedOrigins.indexOf(origin) !== -1 || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -42,7 +65,7 @@ app.get('/', (req, res) => {
     });
 });
 
-// 404 handler - FIXED: Use this instead of app.use('*', ...)
+// 404 handler
 app.use((req, res) => {
     res.status(404).json({ 
         error: 'Route not found',
