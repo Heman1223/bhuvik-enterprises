@@ -29,6 +29,27 @@ app.get('/api/health', (req, res) => {
     res.json({ status: 'ok', message: 'Server is running' });
 });
 
+// Root route - ADD THIS
+app.get('/', (req, res) => {
+    res.json({ 
+        message: 'Bhuvik Enterprises API',
+        status: 'running',
+        endpoints: {
+            health: '/api/health',
+            leads: '/api/leads',
+            registrations: '/api/registrations'
+        }
+    });
+});
+
+// 404 handler - ADD THIS (optional but recommended)
+app.use('*', (req, res) => {
+    res.status(404).json({ 
+        error: 'Route not found',
+        message: `Cannot ${req.method} ${req.originalUrl}`
+    });
+});
+
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
