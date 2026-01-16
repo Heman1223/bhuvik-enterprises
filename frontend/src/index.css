@@ -2114,22 +2114,20 @@ body {
 }
 
 .premium-container {
-  display: grid;
-  grid-template-columns: 1fr 520px;
+  display: block;
   min-height: 100vh;
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: 2rem 3rem;
-  gap: 4rem;
   position: relative;
   z-index: 1;
-  align-items: center;
 }
 
 /* Story Section (Left) */
 .story-section {
   display: block;
   padding: 0;
+  max-width: 600px;
 }
 
 .premium-hero-content {
@@ -2319,7 +2317,19 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 2rem 0;
+  padding: 0;
+}
+
+/* Desktop positioning for form-section */
+@media (min-width: 1025px) {
+  .form-section {
+    position: absolute;
+    right: 3rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 520px;
+    padding: 2rem 0;
+  }
 }
 
 .glass-card {
@@ -3080,13 +3090,13 @@ body {
 /* Responsive Styles */
 @media (max-width: 1024px) {
   .premium-container {
-    grid-template-columns: 1fr;
     padding: 1.5rem;
-    gap: 2rem;
+    max-width: 100%;
   }
 
   .story-section {
     text-align: center;
+    max-width: 100%;
   }
 
   .premium-hero-content {
@@ -3108,6 +3118,16 @@ body {
 
   .hero-desc {
     text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .form-section {
+    position: static;
+    transform: none;
+    width: 100%;
+    max-width: 480px;
+    margin: 0 auto 2rem;
+    padding: 0;
   }
 
   .value-props {
@@ -3128,10 +3148,6 @@ body {
     max-width: 300px;
     margin: 0 auto;
     text-align: center;
-  }
-
-  .form-section {
-    padding: 0;
   }
 }
 
