@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './LandingPage.css';
 
@@ -7,19 +7,6 @@ const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 function LandingPage() {
     // Animated counter state
     const [counters, setCounters] = useState({ companies: 0, cities: 0, placementRate: 0, placedCandidates: 0 });
-    const sliderRef = useRef(null);
-
-    const scrollLeft = () => {
-        if (sliderRef.current) {
-            sliderRef.current.scrollBy({ left: -320, behavior: 'smooth' });
-        }
-    };
-
-    const scrollRight = () => {
-        if (sliderRef.current) {
-            sliderRef.current.scrollBy({ left: 320, behavior: 'smooth' });
-        }
-    };
 
     const topCompanies = [
         "Amazon", "Meta", "Infosys", "TCS", 
@@ -209,41 +196,26 @@ function LandingPage() {
                         <h2 className="reviews-title">Success Stories</h2>
                         <p className="reviews-subtitle">Hear from our placed students</p>
                     </div>
-                    
-                    <div className="reviews-slider-wrapper">
-                        <button className="slider-arrow left" onClick={scrollLeft} aria-label="Scroll left">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                <path d="M15 18l-6-6 6-6" />
-                            </svg>
-                        </button>
-                        
-                        <div className="reviews-slider" ref={sliderRef}>
-                            {testimonials.map((review, index) => (
-                                <div key={index} className="review-card-blue">
-                                    <div className="review-stars">
-                                        {[...Array(review.rating)].map((_, i) => (
-                                            <svg key={i} viewBox="0 0 24 24" fill="currentColor">
-                                                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
-                                            </svg>
-                                        ))}
-                                    </div>
-                                    <p className="review-text">"{review.text}"</p>
-                                    <div className="review-author-row">
-                                        <div className="author-avatar">{review.initials}</div>
-                                        <div className="author-info">
-                                            <span className="author-name">{review.name}</span>
-                                            <span className="author-role">{review.role}</span>
-                                        </div>
+                    <div className="reviews-slider">
+                        {testimonials.map((review, index) => (
+                            <div key={index} className="review-card-blue">
+                                <div className="review-stars">
+                                    {[...Array(review.rating)].map((_, i) => (
+                                        <svg key={i} viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                                        </svg>
+                                    ))}
+                                </div>
+                                <p className="review-text">"{review.text}"</p>
+                                <div className="review-author-row">
+                                    <div className="author-avatar">{review.initials}</div>
+                                    <div className="author-info">
+                                        <span className="author-name">{review.name}</span>
+                                        <span className="author-role">{review.role}</span>
                                     </div>
                                 </div>
-                            ))}
-                        </div>
-
-                        <button className="slider-arrow right" onClick={scrollRight} aria-label="Scroll right">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                <path d="M9 18l6-6-6-6" />
-                            </svg>
-                        </button>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>
