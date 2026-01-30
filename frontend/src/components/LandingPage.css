@@ -354,7 +354,7 @@
 }
 
 .reviews-header {
-    margin-bottom: 2.5rem;
+    margin-bottom: 2rem;
     text-align: center;
 }
 
@@ -370,19 +370,58 @@
     font-size: 1.1rem;
 }
 
-.reviews-slider {
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-    flex-wrap: wrap; /* Wraps on smaller screens, side-by-side on desktop */
-    padding-bottom: 0;
+.reviews-slider-wrapper {
+    position: relative;
     max-width: 1200px;
     margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
 }
 
-/* Remove scrollbar styles as they are no longer needed */
+.reviews-slider {
+    display: flex;
+    gap: 2rem;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding: 1rem 0.5rem 2rem; /* Bottom padding for hover effect space */
+    width: 100%;
+    scrollbar-width: none; /* Hide scrollbar Firefox */
+    -ms-overflow-style: none; /* Hide scrollbar IE/Edge */
+    scroll-snap-type: x mandatory;
+}
+
+/* Remove scrollbar styles */
 .reviews-slider::-webkit-scrollbar {
     display: none;
+}
+
+.slider-arrow {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    color: #1e3a8a;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    flex-shrink: 0;
+    z-index: 5;
+}
+
+.slider-arrow:hover {
+    background: #1e3a8a;
+    color: #ffffff;
+    transform: scale(1.1);
+}
+
+.slider-arrow svg {
+    width: 24px;
+    height: 24px;
 }
 
 .review-card-blue {
@@ -578,6 +617,7 @@
         -webkit-overflow-scrolling: touch;
     }
     
+    
     .value-card {
         min-width: 250px; /* Ensure cards have width */
         flex-direction: column; /* Keep vertical layout inside card */
@@ -618,10 +658,24 @@
         white-space: nowrap;
     }
     
+    .reviews-slider-wrapper {
+        padding: 0 1rem;
+        gap: 0.5rem;
+    }
+
+    /* Hide arrows on mobile if swipe is preferred, or keep small */
+    .slider-arrow {
+        width: 35px;
+        height: 35px;
+        display: flex; /* Keep arrows visible as requested */
+    }
+
     .review-card-blue {
-        min-width: 280px;
-        width: 100%;
+        min-width: 280px; /* Ensure fixed width for scroll */
+        width: 280px; /* Fixed width */
+        flex: 0 0 auto; /* Prevent shrinking/growing */
         padding: 1.5rem;
+        scroll-snap-align: center;
     }
 
     .companies-marquee-wrapper {
