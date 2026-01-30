@@ -9,7 +9,8 @@ function LandingPage() {
     const [counters, setCounters] = useState({ companies: 0, cities: 0, placementRate: 0, placedCandidates: 0 });
 
     const topCompanies = [
-        "Google", "Microsoft", "Amazon", "Meta", "Infosys", "TCS", "Wipro", "Accenture", "Reliance", "HDFC Bank"
+        "Amazon", "Meta", "Infosys", "TCS", 
+        "Wipro", "Accenture", "Reliance"
     ];
 
     const testimonials = [
@@ -17,19 +18,22 @@ function LandingPage() {
         name: "Rahul Sharma",
         role: "Software Developer at TCS",
         text: "The Job Fair was a game-changer for me. I connected with my dream company and got placed within a week!",
-        rating: 5
+        rating: 5,
+        initials: "RS"
       },
       {
         name: "Priya Verma",
         role: "UI/UX Intern at Wipro",
         text: "Highly recommended for students looking for industry exposure. The workshops were incredibly helpful.",
-        rating: 5
+        rating: 5,
+        initials: "PV"
       },
       {
         name: "Amit Patel",
         role: "Data Analyst at Infosys",
         text: "Smooth process from registration to placement. Bhuvik Enterprises truly cares about student careers.",
-        rating: 5
+        rating: 5,
+        initials: "AP"
       }
     ];
 
@@ -61,14 +65,6 @@ function LandingPage() {
 
     return (
         <div className="premium-page">
-            {/* Animated Background */}
-            <div className="premium-bg">
-                <div className="gradient-orb orb-1"></div>
-                <div className="gradient-orb orb-2"></div>
-                <div className="gradient-orb orb-3"></div>
-                <div className="grid-lines"></div>
-            </div>
-
             {/* Premium Navbar */}
             <nav className="navbar">
                 <div className="nav-container">
@@ -96,136 +92,130 @@ function LandingPage() {
             </nav>
 
             <div className="premium-container">
-                {/* Hero Section */}
-                <div className="story-section">
-                    <div className="premium-hero-content">
-                        <div className="hero-tag">
-                            <span className="tag-dot"></span>
-                            <span>Best Placement Agency</span>
-                        </div>
-
-                        <h1 className="hero-headline">
-                            Your Career<br />
-                            <span className="highlight">Starts Here.</span>
-                        </h1>
-
-                        <p className="hero-desc">
-                            India's Leading Placement Agency Website.<br />
-                            Join 500+ students connecting with top companies.
-                        </p>
-
-                        {/* Value Props Card */}
-                        <div className="premium-content-card glass-card">
-                            <div className="value-props">
-                                <div className="value-item">
-                                    <div className="value-icon">
-                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                            <rect x="2" y="7" width="20" height="14" rx="2" />
-                                            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
-                                        </svg>
-                                    </div>
-                                    <div className="value-text">
-                                        <span className="value-title">Jobs</span>
-                                        <span className="value-sub">Full-time roles</span>
-                                    </div>
-                                </div>
-                                <div className="value-item">
-                                    <div className="value-icon">
-                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                            <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
-                                            <path d="M6 12v5c3 3 9 3 12 0v-5" />
-                                        </svg>
-                                    </div>
-                                    <div className="value-text">
-                                        <span className="value-title">Internships</span>
-                                        <span className="value-sub">Industry exposure</span>
-                                    </div>
-                                </div>
-                                <div className="value-item">
-                                    <div className="value-icon">
-                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-                                            <circle cx="9" cy="7" r="4" />
-                                            <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-                                            <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-                                        </svg>
-                                    </div>
-                                    <div className="value-text">
-                                        <span className="value-title">Networking</span>
-                                        <span className="value-sub">Industry leaders</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* Stats Row */}
-                            <div className="stats-row">
-                                <div className="stat-block">
-                                    <span className="stat-num">{counters.companies}+</span>
-                                    <span className="stat-label">Companies</span>
-                                </div>
-                                <div className="stat-divider"></div>
-                                <div className="stat-block">
-                                    <span className="stat-num">{counters.cities}+</span>
-                                    <span className="stat-label">Cities</span>
-                                </div>
-                                <div className="stat-divider"></div>
-                                <div className="stat-block">
-                                    <span className="stat-num">{counters.placementRate}%</span>
-                                    <span className="stat-label">Placement Rate</span>
-                                </div>
-                                <div className="stat-divider"></div>
-                                <div className="stat-block">
-                                    <span className="stat-num">{counters.placedCandidates}+</span>
-                                    <span className="stat-label">Placed Candidates</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Price Tag */}
-                        <div className="price-tag">
-                            <span className="price-label">Registration Fee</span>
-                            <span className="price-amount">₹99</span>
-                            <span className="price-note">One-time • Includes workshop + certificate</span>
-                        </div>
+                {/* Hero Section - Centered */}
+                <div className="premium-hero-content">
+                    <div className="hero-tag">
+                        <span>#1 BEST PLACEMENT AGENCY</span>
                     </div>
 
-                    {/* Companies Marquee */}
-                    <div className="companies-section">
-                        <h2 className="section-title">Partner Companies</h2>
-                        <div className="companies-marquee-wrapper">
-                            <div className="companies-marquee">
-                                {[...topCompanies, ...topCompanies].map((company, index) => (
-                                    <div key={index} className="company-tag glass-card">
-                                        {company}
-                                    </div>
-                                ))}
+                    <h1 className="hero-headline">
+                        Your Career
+                        <span className="highlight">Starts Here.</span>
+                    </h1>
+
+                    <p className="hero-desc">
+                        India's Leading Placement Agency Website.<br />
+                        Join 500+ students connecting with top companies daily.
+                    </p>
+
+                    {/* Value Props - 3 Cards */}
+                    <div className="value-props-container">
+                        <div className="value-card">
+                            <div className="value-icon-box jobs-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                    <rect x="2" y="7" width="20" height="14" rx="2" />
+                                    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+                                </svg>
+                            </div>
+                            <div>
+                                <div className="value-title">Jobs</div>
+                                <div className="value-sub">Full-time roles</div>
+                            </div>
+                        </div>
+
+                        <div className="value-card">
+                            <div className="value-icon-box internship-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                    <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+                                    <path d="M6 12v5c3 3 9 3 12 0v-5" />
+                                </svg>
+                            </div>
+                            <div>
+                                <div className="value-title">Internships</div>
+                                <div className="value-sub">Industry exposure</div>
+                            </div>
+                        </div>
+
+                        <div className="value-card">
+                            <div className="value-icon-box networking-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                                    <circle cx="9" cy="7" r="4" />
+                                    <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                                    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                                </svg>
+                            </div>
+                            <div>
+                                <div className="value-title">Networking</div>
+                                <div className="value-sub">Industry leaders</div>
                             </div>
                         </div>
                     </div>
 
-                    {/* Student Reviews */}
-                    <div className="reviews-section">
-                        <h2 className="section-title">Student Success Stories</h2>
-                        <div className="reviews-grid">
-                            {testimonials.map((review, index) => (
-                                <div key={index} className="review-card glass-card">
-                                    <div className="review-rating">
-                                        {[...Array(review.rating)].map((_, i) => (
-                                            <svg key={i} viewBox="0 0 24 24" fill="currentColor">
-                                                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
-                                            </svg>
-                                        ))}
-                                    </div>
-                                    <p className="review-text">"{review.text}"</p>
-                                    <div className="review-author">
-                                        <div className="author-info">
-                                            <span className="author-name">{review.name}</span>
-                                            <span className="author-role">{review.role}</span>
-                                        </div>
-                                    </div>
+                    {/* Stats Pill - Blue Rounded */}
+                    <div className="stats-pill-container">
+                        <div className="stat-item">
+                            <span className="stat-num">{counters.companies}+</span>
+                            <span className="stat-label">COMPANIES</span>
+                        </div>
+                        <div className="stat-divider"></div>
+                        <div className="stat-item">
+                            <span className="stat-num">{counters.cities}+</span>
+                            <span className="stat-label">CITIES</span>
+                        </div>
+                        <div className="stat-divider"></div>
+                        <div className="stat-item">
+                            <span className="stat-num">{counters.placementRate}%</span>
+                            <span className="stat-label">PLACEMENT</span>
+                        </div>
+                        <div className="stat-divider"></div>
+                        <div className="stat-item">
+                            <span className="stat-num">{counters.placedCandidates}+</span>
+                            <span className="stat-label">CANDIDATES</span>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Partner Companies */}
+                <div className="companies-section">
+                    <h2 className="section-subtitle">PARTNER COMPANIES</h2>
+                    <div className="companies-marquee-wrapper">
+                        <div className="companies-marquee">
+                            {[...topCompanies, ...topCompanies].map((company, index) => (
+                                <div key={index} className="company-pill">
+                                    {company}
                                 </div>
                             ))}
                         </div>
+                    </div>
+                </div>
+
+                {/* Success Stories */}
+                <div className="reviews-section-container">
+                    <div className="reviews-header">
+                        <h2 className="reviews-title">Success Stories</h2>
+                        <p className="reviews-subtitle">Hear from our placed students</p>
+                    </div>
+                    <div className="reviews-slider">
+                        {testimonials.map((review, index) => (
+                            <div key={index} className="review-card-blue">
+                                <div className="review-stars">
+                                    {[...Array(review.rating)].map((_, i) => (
+                                        <svg key={i} viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                                        </svg>
+                                    ))}
+                                </div>
+                                <p className="review-text">"{review.text}"</p>
+                                <div className="review-author-row">
+                                    <div className="author-avatar">{review.initials}</div>
+                                    <div className="author-info">
+                                        <span className="author-name">{review.name}</span>
+                                        <span className="author-role">{review.role}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>
@@ -238,7 +228,7 @@ function LandingPage() {
                     <p className="footer-location">📍 Rohtak | Pan India</p>
                     <div className="footer-contact-row">
                         <p className="footer-email">
-                            📌 Email: <a href="mailto:contact@bhuvikenterprises.in">contact@bhuvikenterprises.in</a>
+                            📧 Email: <a href="mailto:contact@bhuvikenterprises.in">contact@bhuvikenterprises.in</a>
                         </p>
                         <p className="footer-phone">
                             📞 Phone: <a href="tel:+918059223222">+91 80592 23222</a>
