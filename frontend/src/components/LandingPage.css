@@ -646,9 +646,118 @@
     .hero-desc {
         font-size: 1rem;
     }
-    /* Ensure stats fit on very small screens */
+/* Ensure stats fit on very small screens */
     .stats-pill-container {
         padding: 1rem;
         gap: 1rem;
+    }
+}
+
+/* Privacy Policy Styles */
+.policy-container {
+    padding: 6rem 2rem 4rem;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    z-index: 10;
+}
+
+.policy-card {
+    background: #ffffff;
+    padding: 3rem;
+    border-radius: 20px;
+    max-width: 900px;
+    width: 100%;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(226, 232, 240, 0.8);
+}
+
+.policy-card h1 {
+    font-size: 2.5rem;
+    color: #1e3a8a;
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+
+.last-updated {
+    text-align: center;
+    color: #64748b;
+    margin-bottom: 3rem;
+    font-size: 0.95rem;
+}
+
+.policy-card section {
+    margin-bottom: 2.5rem;
+}
+
+.policy-card h2 {
+    font-size: 1.5rem;
+    color: #1e293b;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid #f1f5f9;
+    padding-bottom: 0.5rem;
+}
+
+.policy-card p, .policy-card li {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #475569;
+    margin-bottom: 1rem;
+}
+
+.policy-card ul {
+    padding-left: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.policy-contact p {
+    margin-bottom: 0.5rem;
+}
+
+.policy-contact a {
+    color: #1e3a8a;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.policy-contact a:hover {
+    text-decoration: underline;
+    color: #fbbf24;
+}
+
+.policy-footer {
+    margin-top: 3rem;
+    text-align: center;
+    border-top: 1px solid #e2e8f0;
+    padding-top: 2rem;
+}
+
+.back-btn {
+    display: inline-block;
+    background: #1e3a8a;
+    color: #ffffff;
+    padding: 0.8rem 2rem;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.back-btn:hover {
+    background: #1e40af;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(30, 58, 138, 0.2);
+}
+
+@media (max-width: 768px) {
+    .policy-container {
+        padding: 4rem 1rem;
+    }
+    .policy-card {
+        padding: 2rem 1.5rem;
+    }
+    .policy-card h1 {
+        font-size: 2rem;
     }
 }
